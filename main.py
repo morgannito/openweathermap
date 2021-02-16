@@ -52,7 +52,6 @@ def currentCoord(city, key):
 
 def forecast(city, key):
     # requete post
-    print(city)
     url = "https://api.openweathermap.org/data/2.5/forecast?lang=fr&q=%s&appid=%s" % (city, key)
     x = requests.get(url)
     try:
