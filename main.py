@@ -1,5 +1,7 @@
 import json
 import requests
+import csv
+
 
 # Latitude de Perpignan	42.6886591
 # Longitude de Perpignan	2.8948332
@@ -8,6 +10,28 @@ api_key = "b8bdb7d52b20aa7c239f409d7f009840"
 global tabCity
 tabCity = ""
 
+global csvCity
+csvCity = []
+
+def recherche(villeRecherche):
+    with open('Alentours de Toulouges.csv', newline='') as f:
+        tableau = []
+        lire = csv.reader(f)
+        for ligne in lire:
+            tableau.append(ligne)
+            if ligne[0] == villeRecherche:
+                if len(csvCity) < 40:
+                   yolo = ligne[1].split(";")
+                   dic = {"ville":ligne[0], "pays": yolo[0], "date": yolo[1],"temp":yolo[2],"min":yolo[3],"max":yolo[4]}
+                   csvCity.append(dic)
+    jsondata = json.dumps(csvCity).encode("utf8")
+    copieJson(jsondata)
+
+def copieJson(tab):
+    fichier = open("json.json", "wb")
+    fichier.write(tab)
+    fichier.close()
+    print("copie terminée")
 
 def copie(tab):
     fichier = open("data.csv", "w+")
@@ -17,7 +41,7 @@ def copie(tab):
 
 
 def circle(att, long, key):
-    cnt: int = 5
+    cnt: int = 50
     # requete post
     url = "https://api.openweathermap.org/data/2.5/find?lat=%s&lon=%s&cnt=%s&appid=%s" % (
         att, long, cnt, key)
@@ -74,13 +98,15 @@ def forecast(city, key):
         print(e)
         newCity = input('entre une nouvelle ville avec le bon nom cette fois ... \n')
         forecast(newCity, key)
-    return multiCity
+    return tabCity
 
 
-firstCity = input("Entrez la ville ")
-coord = currentCoord(firstCity, api_key)
-multiCity = circle(coord[0], coord[1], api_key)
+# firstCity = input("Entrez la ville ")
+# coord = currentCoord(firstCity, api_key)
+# multiCity = circle(coord[0], coord[1], api_key)
 
-for i in multiCity:
-    forecast(i, api_key)
-copie(tabCity)
+# for i in multiCity:
+#    forecast(i, api_key)
+# copie(tabCity)
+
+recherche("Toulouges")
