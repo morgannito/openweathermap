@@ -101,7 +101,7 @@ def forecast(city, key):
     return tabCity
 
 
-# firstCity = input("Entrez la ville ")
+firstCity = input("Entrez la ville ")
 # coord = currentCoord(firstCity, api_key)
 # multiCity = circle(coord[0], coord[1], api_key)
 
@@ -109,4 +109,4 @@ def forecast(city, key):
 #    forecast(i, api_key)
 # copie(tabCity)
 
-recherche("Toulouges")
+recherche(firstCity)
