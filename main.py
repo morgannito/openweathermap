@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# -*-coding: utf-8 -*
+
 import modules.api.api as api
 import modules.csv.csv as csv
 import modules.myVar as Var

@@ -24,7 +24,26 @@ def copieJson(tab):
     print("Copie Json Terminée")
 
 def copie(tab):
-    fichier = open("data.csv", "w+")
-    fichier.write(tab)
-    fichier.close()
-    print("Copie Csv Terminée")
+    entetes = [
+        u'Ville',
+        u'Temp',
+        u'Min',
+        u'Max',
+        u'Date'
+    ]
+    yolo = tab.split(";")
+    f = open('data.csv', 'w')
+    ligneEntete = ";".join(entetes) + "\n"
+    f.write(ligneEntete)
+    i = 0
+    print(yolo)
+    for valeur in yolo:
+        print(valeur)
+        if i < 5 :
+            f.write(valeur)
+            f.write(";")
+            i = i +1
+        else:
+            i = 0
+            f.write("\n")
+    f.close()

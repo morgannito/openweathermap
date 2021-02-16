@@ -54,8 +54,8 @@ def forecast(city, key):
             temp_min = round(temp_min)
             temp_max = main['temp_max'] - 273.15
             temp_max = round(temp_max)
-            Var.tabCity = Var.tabCity + "Ville: %s  \ntemperature : %s c\ntemperature min" \
-                                        " : %s c\ntemperature max : %s c\ndate : %s \n" \
+            Var.tabCity = Var.tabCity + "%s;%s;" \
+                                        "%s;%s;%s;" \
                                         % (city, temp, temp_min, temp_max, date)
             i = i + 1
     except Exception as e:
