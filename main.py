@@ -3,14 +3,10 @@ import requests
 
 # Latitude de Perpignan	42.6886591
 # Longitude de Perpignan	2.8948332
-attitude: float = 42.6886591
-longitude: float = 2.8948332
+
 api_key = "b8bdb7d52b20aa7c239f409d7f009840"
 global tabCity
 tabCity = ""
-
-# todo refaire avec inpute longitute lattitude pui faire un forecast sur 5 jours pour toute les villes
-# todo enregistre dans un csv avec 3 colonnes
 
 
 def copie(tab):
@@ -31,11 +27,12 @@ def circle(att, long, key):
     i: int = 0
     circleCity = []
     while i < cnt:
-        y=x[i]
+        y = x[i]
         print(y['name'])
         circleCity.append(y['name'])
-        i = i +1
+        i = i + 1
     return circleCity
+
 
 def currentCoord(city, key):
     # requete post
@@ -70,8 +67,8 @@ def forecast(city, key):
             temp_max = round(temp_max)
             global tabCity
             tabCity = tabCity + "Ville: %s  \ntemperature : %s c\ntemperature min" \
-                        " : %s c\ntemperature max : %s c\ndate : %s \n" \
-                      % (city, temp, temp_min, temp_max, date)
+                                " : %s c\ntemperature max : %s c\ndate : %s \n" \
+                                % (city, temp, temp_min, temp_max, date)
             i = i + 1
     except Exception as e:
         print(e)
