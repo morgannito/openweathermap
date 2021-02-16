@@ -1,6 +1,7 @@
 import json
 import csv
 
+# Permet de rechercher une ville dans le csv
 def recherche(villeRecherche):
     with open('Alentours de Toulouges.csv', newline='') as f:
         tableau = []
@@ -17,12 +18,14 @@ def recherche(villeRecherche):
     copieJson(jsondata)
     return csvCity
 
+# Permet  d'ecrire dans un Json
 def copieJson(tab):
     fichier = open("json.json", "wb")
     fichier.write(tab)
     fichier.close()
     print("Copie Json Terminée")
 
+# Permet d'ecrire dans un fichier csv
 def copie(tab):
     entetes = [
         u'Ville',
@@ -36,14 +39,15 @@ def copie(tab):
     ligneEntete = ";".join(entetes) + "\n"
     f.write(ligneEntete)
     i = 0
-    print(yolo)
     for valeur in yolo:
-        print(valeur)
         if i < 5 :
             f.write(valeur)
             f.write(";")
             i = i +1
         else:
-            i = 0
             f.write("\n")
+            f.write(valeur)
+            f.write(";")
+            i = 1
     f.close()
+    print("Copie CSV Fini")
