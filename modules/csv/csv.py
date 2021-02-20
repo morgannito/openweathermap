@@ -1,5 +1,6 @@
 import json
 import csv
+import myclass.Weather_forecast as Forecast
 
 # Permet de rechercher une ville dans le csv
 def recherche(villeRecherche):
@@ -26,7 +27,7 @@ def copieJson(tab):
     print("Copie Json Terminée")
 
 # Permet d'ecrire dans un fichier csv
-def copie(tab):
+def copie(multiForecast_city):
     entetes = [
         u'Ville',
         u'Temp',
@@ -34,20 +35,20 @@ def copie(tab):
         u'Max',
         u'Date'
     ]
-    yolo = tab.split(";")
     f = open('data.csv', 'w')
     ligneEntete = ";".join(entetes) + "\n"
     f.write(ligneEntete)
-    i = 0
-    for valeur in yolo:
-        if i < 5 :
-            f.write(valeur)
+    for i in multiForecast_city:
+        print(i.city.name)
+        for x in i.list:
+            f.write(i.city.name)
             f.write(";")
-            i = i +1
-        else:
+            f.write(str(round(x.main.temp-273.15))+"°c")
+            f.write(";")
+            f.write(str(round(x.main.tempmin-273.15))+"°c")
+            f.write(";")
+            f.write(str(round(x.main.tempmax-273.15))+"°c")
+            f.write(";")
             f.write("\n")
-            f.write(valeur)
-            f.write(";")
-            i = 1
     f.close()
     print("Copie CSV Fini")
