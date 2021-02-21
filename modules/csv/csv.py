@@ -1,6 +1,6 @@
 import json
 import csv
-import myclass.Weather_forecast as Forecast
+
 
 # Permet de rechercher une ville dans le csv
 def recherche(villeRecherche):
@@ -12,12 +12,14 @@ def recherche(villeRecherche):
             tableau.append(ligne)
             if ligne[0] == villeRecherche:
                 if len(csvCity) < 40:
-                   yolo = ligne[1].split(";")
-                   dic = {"ville":ligne[0], "pays": yolo[0], "date": yolo[1],"temp":yolo[2],"min":yolo[3],"max":yolo[4]}
-                   csvCity.append(dic)
-    jsondata = json.dumps(csvCity).encode("utf8")
+                    yolo = ligne[1].split(";")
+                    dic = {"ville": ligne[0], "pays": yolo[0], "date": yolo[1], "temp": yolo[2], "min": yolo[3],
+                           "max": yolo[4]}
+                    csvCity.append(dic)
+    jsondata = json.dumps(csvCity, sort_keys=True, indent=4).encode("utf8")
     copieJson(jsondata)
     return csvCity
+
 
 # Permet  d'ecrire dans un Json
 def copieJson(tab):
@@ -25,6 +27,7 @@ def copieJson(tab):
     fichier.write(tab)
     fichier.close()
     print("Copie Json Terminée")
+
 
 # Permet d'ecrire dans un fichier csv
 def copie(multiForecast_city):
@@ -43,11 +46,13 @@ def copie(multiForecast_city):
         for x in i.list:
             f.write(i.city.name)
             f.write(";")
-            f.write(str(round(x.main.temp-273.15))+"°c")
+            f.write(str(round(x.main.temp)) + "°c")
             f.write(";")
-            f.write(str(round(x.main.tempmin-273.15))+"°c")
+            f.write(str(round(x.main.tempmin)) + "°c")
             f.write(";")
-            f.write(str(round(x.main.tempmax-273.15))+"°c")
+            f.write(str(round(x.main.tempmax)) + "°c")
+            f.write(";")
+            f.write(str(x.dttxt))
             f.write(";")
             f.write("\n")
     f.close()

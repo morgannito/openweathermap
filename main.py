@@ -3,14 +3,21 @@
 
 import modules.api.api as api
 import modules.csv.csv as csv
-import modules.myVar as Var
+import configparser  # Permet de parser le fichier de paramètres
 
-#firstCity = input("Entrez la ville ")
+config = configparser.RawConfigParser()  # On créé un nouvel objet "config"
+config.read('config.ini')  # On lit le fichier de paramètres
+api_key = config.get('API', 'api_key')
+cnt: int = 10
+
+# firstCity = input("Entrez la ville ")
 firstCity = "Perpignan"
+api.oneCity(firstCity, api_key)
 
-City = api.currentCity(firstCity, Var.api_key)
-multiCity = api.circle(City.coord, Var.api_key, Var.cnt)
-multiForecast_city = api.forecast(multiCity.list, Var.api_key)
+
+City = api.currentCity(firstCity, api_key)
+multiCity = api.circle(City.coord, api_key, cnt)
+multiForecast_city = api.forecast(multiCity.list, api_key)
 csv.copie(multiForecast_city)
-
 csv.recherche(firstCity)
+
