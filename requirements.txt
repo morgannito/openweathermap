@@ -3,3 +3,5 @@ requests~=2.25.1
 gTTS~=2.2.2
 playsound~=1.2.2
 python-dateutil~=2.8.1
+art~=5.1
+termcolor~=1.1.0
