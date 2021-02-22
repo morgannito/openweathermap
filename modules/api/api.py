@@ -8,6 +8,8 @@ import requests
 import myclass.Weather as Weather
 import myclass.Weather_circle as Circle
 import myclass.Weather_forecast as Forecast
+from gtts import gTTS
+from playsound import playsound
 
 
 # Permet d'obtenir les donnée d'une ville
@@ -17,7 +19,8 @@ def currentCity(city, key):
     x = requests.get(url)
     # Recup coordonnées
     result = Weather.weather_from_dict(json.loads(x.text))
-    return result# Permet d'obtenir les donnée d'une ville
+    return result  # Permet d'obtenir les donnée d'une ville
+
 
 def oneCity(city, key):
     # requete post
@@ -25,14 +28,20 @@ def oneCity(city, key):
     x = requests.get(url)
     # Recup coordonnées
     result = Weather.weather_from_dict(json.loads(x.text))
-    print("Bulletin Météo pour %s"%(result.name)+":")
-    print("\t- Température actuel : "+str(round(result.main.temp))+"°c")
-    print("\t- Température minimal prévu : "+str(round(result.main.temp_min))+"°c")
-    print("\t- Température Maximal prévu : "+str(round(result.main.temp_max))+"°c")
-    print("\t- Humidité prévu : "+str(round(result.main.humidity))+"%")
-    print("\t- "+result.weather[0].description)
-
-
+    text = "Bulletin Météo pour %s" % result.name + ":""\t- Température actuel : " + str(
+        round(result.main.temp)) + "°\t- Température minimal prévu : " + str(
+        round(result.main.temp_min)) + "°\t- Température Maximal prévu : " + str(
+        round(result.main.temp_max)) + "°\t- Humidité prévu : " + str(round(result.main.humidity)) + "%\t- " + \
+           result.weather[0].description
+    print("Bulletin Météo pour %s" % result.name + ":")
+    print("\t- Température actuel : " + str(round(result.main.temp)) + "°c")
+    print("\t- Température minimal prévu : " + str(round(result.main.temp_min)) + "°c")
+    print("\t- Température Maximal prévu : " + str(round(result.main.temp_max)) + "°c")
+    print("\t- Humidité prévu : " + str(round(result.main.humidity)) + "%")
+    print("\t- " + result.weather[0].description)
+    var = gTTS(text=text, lang="fr")
+    var.save("annonceMeteo\meteo.mp3")
+    playsound("annonceMeteo\meteo.mp3")
 
 
 # Permet d'obtenir toutes les villes d'un périmètre en cercle
