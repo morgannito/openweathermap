@@ -1,5 +1,5 @@
 # OpenWeather By Morgannito
-![slender](https://openweathermap.org/themes/openweathermap/assets/img/logo_white_cropped.png)
+![Weather](https://openweathermap.org/themes/openweathermap/assets/img/logo_white_cropped.png)
 
 Objectif :
 
