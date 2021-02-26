@@ -28,6 +28,14 @@ def oneCity(city, key):
     x = requests.get(url)
     # Recup coordonnées
     result = Weather.weather_from_dict(json.loads(x.text))
+    return result
+
+def oneCitySpeak(city, key):
+    # requete post
+    url = "https://api.openweathermap.org/data/2.5/weather?q=%s&appid=%s&lang=fr&units=metric" % (city, key)
+    x = requests.get(url)
+    # Recup coordonnées
+    result = Weather.weather_from_dict(json.loads(x.text))
     text = "Bulletin Météo pour %s" % result.name + ":""\t- Température actuel : " + str(
         round(result.main.temp)) + "°\t- Température minimal prévu : " + str(
         round(result.main.temp_min)) + "°\t- Température Maximal prévu : " + str(
@@ -42,7 +50,6 @@ def oneCity(city, key):
     var = gTTS(text=text, lang="fr")
     var.save("annonceMeteo\meteo.mp3")
     playsound("annonceMeteo\meteo.mp3")
-
 
 # Permet d'obtenir toutes les villes d'un périmètre en cercle
 def circle(coord, key, cnt):

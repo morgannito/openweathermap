@@ -2,14 +2,15 @@
 # -*- coding: utf-8 -*
 
 
-from dataclasses import dataclass
-from typing import Any, List, TypeVar, Callable, Type, cast
 import json
 import requests
-from sqlalchemy import Column, Integer, String, ForeignKey, Text
+from dataclasses import dataclass
+from typing import Any, List, TypeVar, Callable, Type, cast
+from sqlalchemy import Column, Integer, ForeignKey, Text
 from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker, relationship
 from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import sessionmaker, relationship
+
 Base = declarative_base()  # Required
 T = TypeVar("T")
 
@@ -355,16 +356,15 @@ def weather_to_dict(x: Weather) -> Any:
 if __name__ == '__main__':
 
     # engine = create_engine('sqlite:///demo.db', echo=False)
-    engine = create_engine("mysql://user:mdp@82.65.123.20/weather", pool_size=10, max_overflow=20)
+    engine = create_engine("mysql://weather:weather@82.65.123.20/weather", pool_size=10, max_overflow=20)
 
-    print("--- Construct all tables for the database (here just one table) ---")
+    print("--- Construct all tables for the database ---")
     Base.metadata.create_all(engine)  # Only for the first time
 
     print("--- Create three new contacts and push its into the database ---")
     Session = sessionmaker(bind=engine)
     session = Session()
-
-    url = "https://api.openweathermap.org/data/2.5/weather?q=%s&appid=%s&lang=fr&units=metric" % ("Perpignan", "b8bdb7d52b20aa7c239f409d7f009840")
+    url = "https://api.openweathermap.org/data/2.5/weather?q=%s&appid=%s&lang=fr&units=metric" % ("Paris", "b8bdb7d52b20aa7c239f409d7f009840")
     x = requests.get(url)
     # Recup coordonnées
     print(x.text)

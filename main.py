@@ -4,6 +4,7 @@
 import modules.api.api as api
 import modules.csv.csv as csv
 import configparser  # Permet de parser le fichier de paramètres
+import modules.sql.sql as sql
 from art import *
 from termcolor import colored
 
@@ -20,12 +21,16 @@ cnt: int = 10
 
 # firstCity = input("Entrez la ville ")
 firstCity = "Perpignan"
-api.oneCity(firstCity, api_key)
+test = api.oneCity(firstCity, api_key)
+#sql.createTable()
+#sql.InsertWeather(test)
+#sql.verif(test)
 
-
+#
 City = api.currentCity(firstCity, api_key)
 multiCity = api.circle(City.coord, api_key, cnt)
 multiForecast_city = api.forecast(multiCity.list, api_key)
-csv.copie(multiForecast_city)
-csv.recherche(firstCity)
-
+sql.forecast(multiForecast_city)
+# csv.copie(multiForecast_city)
+# csv.recherche(firstCity)
+#
