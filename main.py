@@ -26,7 +26,6 @@ test = api.oneCity(firstCity, api_key)
 #sql.InsertWeather(test)
 #sql.verif(test)
 
-#
 City = api.currentCity(firstCity, api_key)
 multiCity = api.circle(City.coord, api_key, cnt)
 multiForecast_city = api.forecast(multiCity.list, api_key)

@@ -23,7 +23,7 @@ def createTable():
                                 temp_min int ,
                                 temp_max int ,
                                 humidity int ,
-                                description int  )''');
+                                description text  )''');
 
         mydb.commit()
     except:
@@ -35,10 +35,25 @@ def createTable():
 def forecast(multiForecast_city):
     for i in multiForecast_city:
         for x in i.list:
-            sql = "INSERT INTO aled (town,longitude,latitude,date,temp,temp_min,temp_max,humidity,description) VALUES (%s, %s,%s, %s,%s, %s,%s, %s,%s)"
-            val = (i.city.name,2,4,x.dttxt,round(x.main.temp),round(x.main.tempmin),round(x.main.tempmax),x.main.humidity,x.weather[0].description)
-            mycursor.execute(sql, val)
-            mydb.commit()
+            mycursor = mydb.cursor(buffered=True)
+            sql = "SELECT id FROM aled WHERE town = %s and date= %s "
+            adr = (i.city.name,x.dttxt)
+            mycursor.execute(sql, adr)
+            myresult = mycursor.fetchone()
+            print(myresult[0])
+            # if 0 isn't here if 1 isHere
+            if mycursor.rowcount == 0 :
+                print("insert")
+                sql = "INSERT INTO aled (town,longitude,latitude,date,temp,temp_min,temp_max,humidity,description) VALUES (%s, %s,%s, %s,%s, %s,%s, %s,%s)"
+                val = (i.city.name,i.city.coord.lon,i.city.coord.lat,x.dttxt,round(x.main.temp),round(x.main.tempmin),round(x.main.tempmax),x.main.humidity,x.weather[0].description)
+                mycursor.execute(sql, val)
+                mydb.commit()
+            else:
+                print("update")
+                sql = "UPDATE aled SET temp= %s , temp_min = %s,temp_max= %s,humidity= %s ,description= %s where id = %s  "
+                val = (round(x.main.temp),round(x.main.tempmin),round(x.main.tempmax),x.main.humidity,x.weather[0].description,myresult[0])
+                mycursor.execute(sql, val)
+                mydb.commit()
 
 
 def InsertWeather(weather):
