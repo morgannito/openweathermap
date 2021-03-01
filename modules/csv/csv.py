@@ -1,4 +1,3 @@
-import json
 import csv
 
 
@@ -18,17 +17,7 @@ def recherche(villeRecherche):
                     dic = {"ville": ligne[0], "pays": data[0], "date": data[1], "temp": data[2], "min": data[3],
                            "max": data[4]}
                     csvCity.append(dic)
-    jsondata = json.dumps(csvCity, sort_keys=True, indent=4).encode("utf8")
-    copieJson(jsondata)
     return csvCity
-
-# Permet d'enregistrer dans un fichier json
-# @param tab: json
-def copieJson(tab):
-    fichier = open("json.json", "wb")
-    fichier.write(tab)
-    fichier.close()
-    print("Copie Json Terminée")
 
 
 # Permet d'ecrire dans un fichier csv

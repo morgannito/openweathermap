@@ -12,11 +12,10 @@ config = configparser.RawConfigParser()  # On créé un nouvel objet "config"
 config.read('config.ini')  # On lit le fichier de paramètres
 # # Recup la clé API du Fichier config.ini
 api_key = config.get('API', 'api_key')
-cnt: int = 50
-
+cnt: int = 2
 
 # Just For Fun
-print(colored(text2art("OpenWeather"),'cyan'))
+print(colored(text2art("OpenWeather"), 'cyan'))
 print(colored('Created by Morgannito \n\n'.center(60), 'red'))
 
 # firstCity = input("Entrez la ville ")

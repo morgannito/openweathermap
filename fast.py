@@ -1,10 +1,12 @@
 import json
+from typing import Optional
 
-from fastapi import FastAPI
-#!/usr/bin/env python
+from fastapi import FastAPI, Form
+# !/usr/bin/env python
 # -*- coding: utf-8 -*
 import configparser  # Permet de parser le fichier de paramètres
 import mysql.connector
+from pydantic import BaseModel
 
 config = configparser.RawConfigParser()  # On créé un nouvel objet "config"
 config.read('./config.ini')  # On lit le fichier de paramètres
@@ -12,9 +14,10 @@ hote = config.get('DataBase', 'host')
 login = config.get('DataBase', 'user')
 passw = config.get('DataBase', 'pass')
 db = config.get('DataBase', 'db')
-mydb  = mysql.connector.connect(host=hote, user=login, password=passw, database=db)
-mycursor = mydb .cursor()
+mydb = mysql.connector.connect(host=hote, user=login, password=passw, database=db)
+mycursor = mydb.cursor()
 app = FastAPI()
+
 
 @app.get("/")
 async def root():
@@ -23,9 +26,14 @@ async def root():
     myresult = mycursor.fetchall()
     tab = []
     for i in myresult:
-        ville = {"id": i[0], "city": i[1], "longitutde":i[2], "latitude": i[3], "time": i[4],
-                 "temp": i[5],"min":i[6],"max":i[7],"humidity":i[8],"description":i[9]}
+        ville = {"id": i[0], "city": i[1], "longitutde": i[2], "latitude": i[3], "time": i[4], "temp": i[5],
+                 "min": i[6], "max": i[7], "humidity": i[8], "description": i[9]}
+        jsondata = json.dumps(ville).encode("utf8")
         tab.append(ville)
-
     return tab
 
+
+
+@app.post("/login/")
+async def login(username: str = Form(...), password: str = Form(...)):
+    return {"username": username}

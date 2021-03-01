@@ -15,3 +15,9 @@ Pour installer les packets nécessaires faire les étapes suivantes :
         - ./install.sh
 
 
+
+Pour Lancer le serveur web avec l'api  :
+        
+ 
+         uvicorn fast:app
+
