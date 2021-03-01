@@ -2,39 +2,38 @@
 # -*- coding: utf-8 -*
 
 import json
-
 import requests
-
 import myclass.Weather as Weather
 import myclass.Weather_circle as Circle
 import myclass.Weather_forecast as Forecast
+
 from gtts import gTTS
 from playsound import playsound
 
 
 # Permet d'obtenir les donnée d'une ville
+# utilise Current Weather Data
+# @param city: String name of the city
+# @param key: String api_key of openweathermap
+# @return objet Weather
 def currentCity(city, key):
     # requete post
     url = "https://api.openweathermap.org/data/2.5/weather?q=%s&appid=%s&lang=fr&units=metric" % (city, key)
     x = requests.get(url)
-    # Recup coordonnées
+    # Recup le result
     result = Weather.weather_from_dict(json.loads(x.text))
     return result  # Permet d'obtenir les donnée d'une ville
 
 
-def oneCity(city, key):
-    # requete post
-    url = "https://api.openweathermap.org/data/2.5/weather?q=%s&appid=%s&lang=fr&units=metric" % (city, key)
-    x = requests.get(url)
-    # Recup coordonnées
-    result = Weather.weather_from_dict(json.loads(x.text))
-    return result
-
+# recup toutes les données d'une ville et fait l'annonce météo audio
+# utilise Current Weather Data
+# @param city: String name of the city
+# @param key: String api_key of openweathermap
 def oneCitySpeak(city, key):
     # requete post
     url = "https://api.openweathermap.org/data/2.5/weather?q=%s&appid=%s&lang=fr&units=metric" % (city, key)
     x = requests.get(url)
-    # Recup coordonnées
+    # Recup le result
     result = Weather.weather_from_dict(json.loads(x.text))
     text = "Bulletin Météo pour %s" % result.name + ":""\t- Température actuel : " + str(
         round(result.main.temp)) + "°\t- Température minimal prévu : " + str(
@@ -51,18 +50,26 @@ def oneCitySpeak(city, key):
     var.save("annonceMeteo\meteo.mp3")
     playsound("annonceMeteo\meteo.mp3")
 
+
 # Permet d'obtenir toutes les villes d'un périmètre en cercle
+# @param coord: array of Coord contains latitude & longitude
+# @param key: String api_key of openweathermap
+# @param cnt: Int number of city return max 50
+# @return objet Circle_weather
 def circle(coord, key, cnt):
     # requete post
     url = "https://api.openweathermap.org/data/2.5/find?lat=%s&lon=%s&cnt=%s&appid=%s&lang=fr&units=metric" % (
         coord.lat, coord.lon, cnt, key)
     x = requests.get(url)
-    # Recup coordonnées
+    # Recup le result
     result = Circle.weather_circle_from_dict(json.loads(x.text))
     return result
 
 
 # Permet d'obtenir toutes les données sur un forecast de 5 jours avec 3 Heures d'intervalle
+# @param multi_city: array of city
+# @param key: String api_key of openweathermap
+# @return tabCity: array of object forecast
 def forecast(multi_city, key):
     tabCity = []
     # requete post
