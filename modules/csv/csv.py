@@ -29,21 +29,20 @@ def copie(multiForecast_city):
         u'Max',
         u'Date'
     ]
-    f = open('data.csv', 'w')
-    ligneEntete = ";".join(entetes) + "\n"
-    f.write(ligneEntete)
-    for i in multiForecast_city:
-        for x in i.list:
-            f.write(i.city.name)
-            f.write(";")
-            f.write(str(round(x.main.temp)) + "°c")
-            f.write(";")
-            f.write(str(round(x.main.tempmin)) + "°c")
-            f.write(";")
-            f.write(str(round(x.main.tempmax)) + "°c")
-            f.write(";")
-            f.write(str(x.dttxt))
-            f.write(";")
-            f.write("\n")
-    f.close()
+    with open('data.csv', 'w') as f:
+        ligneEntete = ";".join(entetes) + "\n"
+        f.write(ligneEntete)
+        for i in multiForecast_city:
+            for x in i.list:
+                f.write(i.city.name)
+                f.write(";")
+                f.write(str(round(x.main.temp)) + "°c")
+                f.write(";")
+                f.write(str(round(x.main.tempmin)) + "°c")
+                f.write(";")
+                f.write(str(round(x.main.tempmax)) + "°c")
+                f.write(";")
+                f.write(str(x.dttxt))
+                f.write(";")
+                f.write("\n")
     print("Copie CSV Fini")
