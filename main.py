@@ -3,6 +3,8 @@
 
 import modules.api.api as api
 import modules.csv.csv as csv
+import sys
+import requests
 import configparser  # Permet de parser le fichier de paramètres
 import modules.sql.sql as sql
 from art import *
@@ -22,9 +24,14 @@ print(colored('Created by Morgannito \n\n'.center(60), 'red'))
 firstCity = "Perpignan"
 
 # Requete avec l'api
-City = api.currentCity(firstCity, api_key)
-multiCity = api.circle(City.coord, api_key, cnt)
-multiForecast_city = api.forecast(multiCity.list, api_key)
+try:
+    City = api.currentCity(firstCity, api_key)
+    multiCity = api.circle(City.coord, api_key, cnt)
+    multiForecast_city = api.forecast(multiCity.list, api_key)
+except requests.exceptions.Timeout:
+    sys.exit("Erreur : l'API OpenWeatherMap ne répond pas (timeout).")
+except requests.exceptions.RequestException as e:
+    sys.exit("Erreur lors de l'appel à l'API OpenWeatherMap : %s" % e)
 
 # Enregistrement des données
 csv.copie(multiForecast_city)
