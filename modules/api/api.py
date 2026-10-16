@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*
 
 import json
+import os
 import requests
 import myclass.Weather as Weather
 import myclass.Weather_circle as Circle
@@ -51,8 +52,9 @@ def oneCitySpeak(city, key):
     print("\t- Humidité prévu : " + str(round(result.main.humidity)) + "%")
     print("\t- " + result.weather[0].description)
     var = gTTS(text=text, lang="fr")
-    var.save("annonceMeteo\meteo.mp3")
-    playsound("annonceMeteo\meteo.mp3")
+    os.makedirs("annonceMeteo", exist_ok=True)
+    var.save(os.path.join("annonceMeteo", "meteo.mp3"))
+    playsound(os.path.join("annonceMeteo", "meteo.mp3"))
 
 
 # Permet d'obtenir toutes les villes d'un périmètre en cercle
