@@ -22,6 +22,7 @@ def currentCity(city, key):
     # requete post
     url = "https://api.openweathermap.org/data/2.5/weather?q=%s&appid=%s&lang=fr&units=metric" % (city, key)
     x = requests.get(url, timeout=TIMEOUT)
+    x.raise_for_status()
     # Recup le result
     result = Weather.weather_from_dict(json.loads(x.text))
     return result  # Permet d'obtenir les donnée d'une ville
@@ -35,6 +36,7 @@ def oneCitySpeak(city, key):
     # requete post
     url = "https://api.openweathermap.org/data/2.5/weather?q=%s&appid=%s&lang=fr&units=metric" % (city, key)
     x = requests.get(url, timeout=TIMEOUT)
+    x.raise_for_status()
     # Recup le result
     result = Weather.weather_from_dict(json.loads(x.text))
     text = "Bulletin Météo pour %s" % result.name + ":""\t- Température actuel : " + str(
@@ -63,6 +65,7 @@ def circle(coord, key, cnt):
     url = "https://api.openweathermap.org/data/2.5/find?lat=%s&lon=%s&cnt=%s&appid=%s&lang=fr&units=metric" % (
         coord.lat, coord.lon, cnt, key)
     x = requests.get(url, timeout=TIMEOUT)
+    x.raise_for_status()
     # Recup le result
     result = Circle.weather_circle_from_dict(json.loads(x.text))
     return result
@@ -78,6 +81,7 @@ def forecast(multi_city, key):
     for city in multi_city:
         url = "https://api.openweathermap.org/data/2.5/forecast?lang=fr&units=metric&q=%s&appid=%s" % (city.name, key)
         x = requests.get(url, timeout=TIMEOUT)
+        x.raise_for_status()
         result = Forecast.WeatherForecastfromdict(json.loads(x.text))
         tabCity.append(result)
     return tabCity
