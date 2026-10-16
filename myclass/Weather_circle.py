@@ -16,8 +16,8 @@ def from_float(x: Any) -> float:
 
 
 def to_float(x: Any) -> float:
-    assert isinstance(x, float)
-    return x
+    assert isinstance(x, (float, int)) and not isinstance(x, bool)
+    return float(x)
 
 
 def from_str(x: Any) -> str:
